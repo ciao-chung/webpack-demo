@@ -1,14 +1,15 @@
-const path = require('path')
+const { resolve } = require('path')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 module.exports = {
-  entry: path.resolve(__dirname, 'src/index.js'),
+  entry: resolve(__dirname, 'src/index.js'),
   output: {
-    path: path.resolve(__dirname, 'dist'),
+    path: resolve(__dirname, 'dist'),
     filename: 'bundle.js',
   },
   devtool: 'eval-source-map',
   devServer: {
-    contentBase: path.resolve(__dirname, 'dist')
+    contentBase: resolve(__dirname, 'dist')
   },
   module: {
     rules: [
@@ -38,11 +39,23 @@ module.exports = {
           'sass-loader',
         ],
       },
+      {
+        test: /\.ejs$/,
+        loader: 'ejs-loader',
+      },
     ],
   },
   plugins: [
     new MiniCssExtractPlugin({
       filename: 'bundle.css',
+    }),
+    new HtmlWebpackPlugin({
+      template: resolve(__dirname, "src", "html", "index.html"),
+      filename: resolve(__dirname, "dist", "index.html"),
+    }),
+    new HtmlWebpackPlugin({
+      template: resolve(__dirname, "src", "html", "partials/main.html"),
+      filename: resolve(__dirname, "dist", "main.html"),
     }),
   ],
 }
