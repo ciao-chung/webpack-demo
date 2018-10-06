@@ -43,6 +43,21 @@ module.exports = {
         test: /\.ejs$/,
         loader: 'ejs-loader',
       },
+      {
+        test: /\.(jpe?g|png|gif|svg)$/i,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              outputPath: 'images/',
+              publicPath: "/images"
+            }
+          },
+          {
+            loader: "image-webpack-loader",
+          }
+        ],
+      },
     ],
   },
   plugins: [
