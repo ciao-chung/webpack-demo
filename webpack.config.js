@@ -1,6 +1,7 @@
 const { resolve } = require('path')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const SpritesmithPlugin = require('webpack-spritesmith')
 module.exports = {
   entry: resolve(__dirname, 'src/index.js'),
   output: {
@@ -68,9 +69,19 @@ module.exports = {
       template: resolve(__dirname, "src", "html", "index.html"),
       filename: resolve(__dirname, "dist", "index.html"),
     }),
-    new HtmlWebpackPlugin({
-      template: resolve(__dirname, "src", "html", "partials/main.html"),
-      filename: resolve(__dirname, "dist", "main.html"),
+    new SpritesmithPlugin({
+      src: {
+        cwd: resolve(__dirname, 'src/icons'),
+        glob: '*.png'
+      },
+      // 自動產生輸出後的位置
+      target: {
+        image: resolve(__dirname, 'src/sprite/sprite.png'),
+        css: resolve(__dirname, 'src/sprite/sprite.css')
+      },
+      apiOptions: {
+        cssImageRef: "sprite.png"
+      }
     }),
   ],
 }
