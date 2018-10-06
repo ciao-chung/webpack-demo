@@ -1,1 +1,3 @@
-console.log('foobar...')
+const name = 'ciao'
+const age = 25
+console.log(`${name}: ${age}`);
